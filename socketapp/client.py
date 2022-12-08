@@ -32,6 +32,10 @@ class Client:
     def uri(self) -> str:
         return f"ws://{self.host}:{self.port}"
 
+    async def wait_until_ready(self) -> None:
+        while self.ws is None and self.future and not self.future.done():
+            await asyncio.sleep(0.25)
+
     async def run(self) -> None:
         asyncio.get_event_loop().add_signal_handler(signal.SIGINT, self.stop)
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from socketapp import Client, Event, Server
 
 

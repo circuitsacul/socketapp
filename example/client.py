@@ -5,9 +5,10 @@ from socketapp import Client
 
 
 async def send(client: Client) -> None:
+    await client.wait_until_ready()
     while True:
-        await asyncio.sleep(5)
         await client.send(Message(data="hi"), client.clients)
+        await asyncio.sleep(1)
 
 
 async def main(client: Client) -> None:
