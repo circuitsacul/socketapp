@@ -3,7 +3,7 @@ name = "socketapp"
 version = "0"
 description = "An opinionated library for creating websocket-based applications."
 authors = ["CircuitSacul <circuitsacul@gmail.com>"]
-license = "The Unlicense"
+license = "Unlicense"
 readme = "README.md"
 
 [tool.poetry.dependencies]
