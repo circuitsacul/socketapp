@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "socketapp"
+version = "0"
+description = "An opinionated library for creating websocket-based applications."
+authors = ["CircuitSacul <circuitsacul@gmail.com>"]
+license = "The Unlicense"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+websockets = "^10.4"
+pydantic = "^1.10.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.168"
+nox = "^2022.11.21"
+black = "^22.10.0"
+mypy = "^0.991"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
