@@ -33,7 +33,7 @@ class Event(pydantic.BaseModel):
         dct["cls_id"] = self.event_id
         return dct
 
-    def to_json(self) -> str:  # type: ignore
+    def to_json(self) -> str:
         return json.dumps(self.to_dict())
 
     @staticmethod

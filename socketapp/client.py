@@ -15,10 +15,7 @@ LOG = logging.getLogger(__file__)
 
 class Client:
     def __init__(
-        self,
-        host: str = "localhost",
-        port: int = 5000,
-        password: str | None = None,
+        self, host: str = "localhost", port: int = 5000, password: str | None = None
     ) -> None:
         self.host = host
         self.port = port
@@ -61,17 +58,12 @@ class Client:
             if not await event.process_client(self, self.client_id):
                 return
 
-        raw = json.dumps(
-            {
-                "to": list(to),
-                "event": event.to_dict(),
-            }
-        )
+        raw = json.dumps({"to": list(to), "event": event.to_dict()})
         await self.ws.send(raw)
 
     async def _handshake(self, ws: WebSocketClientProtocol) -> int:
         await ws.send(json.dumps({"password": self.password}))
-        return json.loads(await ws.recv())["client_id"]
+        return int(json.loads(await ws.recv())["client_id"])
 
     async def _process_messages(self, ws: WebSocketClientProtocol) -> None:
         try:

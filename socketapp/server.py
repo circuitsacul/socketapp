@@ -15,10 +15,7 @@ LOG = logging.getLogger(__file__)
 
 class Server:
     def __init__(
-        self,
-        host: str = "localhost",
-        port: int = 5000,
-        password: str | None = None,
+        self, host: str = "localhost", port: int = 5000, password: str | None = None
     ) -> None:
         self.host = host
         self.port = port
@@ -106,12 +103,7 @@ class Server:
         if not ret:
             return
 
-        to_send = json.dumps(
-            {
-                "author_id": client_id,
-                "event": event.to_dict(),
-            }
-        )
+        to_send = json.dumps({"author_id": client_id, "event": event.to_dict()})
 
         await asyncio.gather(
             *(ws.send(to_send) for (cid, ws) in self.clients.items() if cid in to),
