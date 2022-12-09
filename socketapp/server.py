@@ -24,12 +24,12 @@ class Server:
 
         self.clients: dict[int, WebSocketServerProtocol] = {}
 
-        self.future: asyncio.Future[None] = asyncio.Future()
+        self.future: asyncio.Future[None] | None = None
 
     async def run(self) -> None:
         asyncio.get_event_loop().add_signal_handler(signal.SIGINT, self.stop)
 
-        if self.future.done():
+        if not self.future or self.future.done():
             self.future = asyncio.Future()
 
         asyncio.create_task(self._broadcast_clients())
@@ -37,7 +37,8 @@ class Server:
             await self.future
 
     def stop(self) -> None:
-        self.future.set_result(None)
+        if self.future and not self.future.done():
+            self.future.set_result(None)
 
     async def _handshake(self, ws: WebSocketServerProtocol) -> int | None:
         init = await ws.recv()
