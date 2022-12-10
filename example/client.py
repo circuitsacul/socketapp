@@ -1,5 +1,4 @@
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
 
 from example.events import Message
 from socketapp import Client
@@ -8,8 +7,7 @@ from socketapp import Client
 async def send(client: Client) -> None:
     await client.wait_until_ready()
     while True:
-        with ThreadPoolExecutor(1, "AsyncInput") as executor:
-            inp = await asyncio.get_event_loop().run_in_executor(executor, input)
+        inp = await asyncio.to_thread(input)
         await client.send(Message(data=inp), client.clients)
 
 
