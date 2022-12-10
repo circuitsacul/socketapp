@@ -11,7 +11,6 @@ async def send(client: Client) -> None:
         with ThreadPoolExecutor(1, "AsyncInput") as executor:
             inp = await asyncio.get_event_loop().run_in_executor(executor, input)
         await client.send(Message(data=inp), client.clients)
-        await asyncio.sleep(1)
 
 
 async def main(client: Client) -> None:
