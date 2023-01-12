@@ -4,6 +4,7 @@ import asyncio
 import json
 import logging
 import signal
+import typing as t
 
 from websockets.exceptions import ConnectionClosedOK
 from websockets.legacy.server import WebSocketServerProtocol, serve
@@ -35,6 +36,14 @@ class Server:
         asyncio.create_task(self._broadcast_clients())
         async with serve(self._serve, self.host, self.port):
             await self.future
+
+    async def send(self, event: Event, to: t.Collection[int]) -> None:
+        if not await event.process_server(self, -1, set(to)):
+            return
+
+        raw = json.dumps({"author_id": -1, "event": event.to_dict()})
+        for client in self.clients.values():
+            asyncio.create_task(client.send(raw))
 
     def stop(self) -> None:
         if self.future and not self.future.done():
