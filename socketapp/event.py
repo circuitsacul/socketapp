@@ -10,17 +10,18 @@ if t.TYPE_CHECKING:
     from socketapp.server import Server
 
 
-class Event(pydantic.BaseModel):
-    event_map: t.ClassVar[dict[int, type["Event"]]] = {}
+event_map: dict[int, type[Event]] = {}
 
+
+class Event(pydantic.BaseModel):
     event_id: t.ClassVar[int]
     process_locally: t.ClassVar[bool] = True
 
     def __init_subclass__(cls) -> None:
         assert cls.event_id is not None
-        assert cls.event_id not in Event.event_map
+        assert cls.event_id not in event_map
 
-        Event.event_map[cls.event_id] = cls
+        event_map[cls.event_id] = cls
 
     async def process_server(self, server: "Server", author: int, to: set[int]) -> bool:
         return True
