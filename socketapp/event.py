@@ -41,4 +41,4 @@ class Event(pydantic.BaseModel):
     def load(data: dict[str, t.Any] | str) -> "Event":
         if isinstance(data, str):
             data = t.cast("dict[str, t.Any]", json.loads(data))
-        return Event.event_map[data.pop("cls_id")](**data)
+        return event_map[data.pop("cls_id")](**data)
