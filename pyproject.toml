@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.8"
 websockets = "^11.0"
-pydantic = "^1.10.9"
+pydantic = ">=1.10.9,<3.0.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = ">=0.0.272,<0.0.276"
